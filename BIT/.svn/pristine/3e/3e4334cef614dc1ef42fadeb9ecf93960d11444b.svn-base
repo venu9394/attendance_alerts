@@ -1,0 +1,171 @@
+package com.hcl.servlets;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.hcl.util.Util;
+
+/**
+ * Servlet implementation class Tdscal_1
+ */
+public class Tdscal_nEW extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+   	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doPost(request,response);
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		String type=request.getParameter("Type");
+		
+		System.out.println(type);
+		
+	/*	 String $80c_pf_estimate=request.getParameter("$80c_pf_estimate");
+		  String $80c_tution_estimate=request.getParameter("");
+		  String $FF0005=request.getParameter("");
+		  String $80c_hl_estimate=request.getParameter("");
+		  String $80c_nsc_estimate=request.getParameter("");
+		  String $80c_post_estimate=request.getParameter("");
+		  String $80c_ul_estimate=request.getParameter("");
+		  String $80c_eq_estimate=request.getParameter("");
+		  String $80ccc_licp_estimate=request.getParameter("");
+		  String $80ccd_pscg_estimate=request.getParameter("");
+		  String $80c_sss_estimate=request.getParameter("");
+		  String $80c_fd_estimate=request.getParameter("");
+		  String $80c_mf_estimate=request.getParameter("");
+		  String $80c_bond_estimate=request.getParameter("");
+		  String $80c_others_estimate=request.getParameter("");
+		  String $80C_final=request.getParameter("");*/
+		
+		  String emp_id=request.getParameter("emp_id");
+		  
+		  String $80c_pf_estimate = request.getParameter("$80c_pf_estimate");
+		  String $80c_tution_estimate = request.getParameter("$80c_tution_estimate");
+		  String $FF0005 = request.getParameter("$FF0005");
+		  String $80c_hl_estimate = request.getParameter("$80c_hl_estimate");
+		  String $80c_nsc_estimate = request.getParameter("$80c_nsc_estimate");
+		  String $80c_post_estimate = request.getParameter("$80c_post_estimate");
+		  String $80c_ul_estimate = request.getParameter("$80c_ul_estimate");
+		  String $80c_eq_estimate = request.getParameter("$80c_eq_estimate");
+		  String $80ccc_licp_estimate = request.getParameter("$80ccc_licp_estimate");
+		  String $80ccd_pscg_estimate = request.getParameter("$80ccd_pscg_estimate");
+		  String $80c_sss_estimate = request.getParameter("$80c_sss_estimate");
+		  String $80c_fd_estimate = request.getParameter("$80c_fd_estimate");
+		  String $80c_mf_estimate = request.getParameter("$80c_mf_estimate");
+		  String $80c_bond_estimate	= request.getParameter("$80c_bond_estimate");
+		  String $80c_others_estimate = request.getParameter("$80c_others_estimate");
+		  String $80C_final	 = request.getParameter("$80C_final");
+		  
+		  
+		  Connection con=null;
+		  PreparedStatement pstmt=null;
+		  
+		  con=Util.getConnection();
+		StringBuffer saving=new StringBuffer();
+		  if(con!=null){
+		  try{
+
+			  
+			  StringBuffer Search_empid=new StringBuffer();
+			  
+			  Search_empid.append(" SELECT EMPLOYEEID FROM TEST.TBL_IT_EMP_DETAILS WHERE FY=''");
+			  
+			  
+			  
+			  
+			  saving.append("INSERT INTO TEST.TBL_IT_EMP_DETAILS");
+		        saving.append(" (");
+		        saving.append("FY, EMPLOYEEID, NAME, DEPT, DESIGNATION, ADDRESS, CONTACT, HQ, AGE, STATUS, LUPDATE");
+		        saving.append(" )");
+		        saving.append(" VALUES");
+		        saving.append(" (");
+		        
+		        saving.append(" (SELECT CASE WHEN MONTH(CURDATE())<=3 THEN CONCAT(YEAR(CURDATE())-1, '-',YEAR(CURDATE()))");
+		        saving.append(" ELSE CONCAT(YEAR(CURDATE()),'-', YEAR(CURDATE())+1) END) ,");
+		        saving.append(id + ",");
+		        saving.append("'" + name + "',");
+		        saving.append("'" + department + "',");
+		        saving.append("'" + designation + "',");
+		        saving.append("'" + address + "',");
+		        saving.append("'" + mobile + "',");
+		        saving.append("'" + hq + "',");
+		        saving.append(age + ",");
+		        saving.append(" 'S',");
+		        saving.append(" now()");
+		        saving.append(" )");
+		        System.out.println("Tbl-1-->" + saving.toString());
+		        int rs = 0;
+		        PreparedStatement ps = con.prepareStatement(saving.toString(), 1);
+		        
+		        rs = ps.executeUpdate();
+		        java.sql.ResultSet generatedKeys = null;
+		        
+		        generatedKeys = ps.getGeneratedKeys();
+		        
+
+
+		        if (rs > 0)
+		        {
+
+
+		          if ((generatedKeys != null) && (generatedKeys.next())) {
+		            Long primaryKey = Long.valueOf(generatedKeys.getLong(1));
+		            
+		            Key = primaryKey.toString();
+		          }
+		        }
+			  
+			  
+			  
+			  
+			  if( type!=null && type.equalsIgnoreCase("Section80C_Details")){
+				  
+				  
+				  StringBuffer Section80C_Details=new StringBuffer();
+				  
+				  Section80C_Details.append(" ");
+				  
+			  }else if(type.equalsIgnoreCase("")){
+				
+				  
+				  
+			  }
+			  
+			  
+		  }catch(Exception e){
+			  e.printStackTrace();
+		  }
+		  }else{
+			  System.out.println("Connection Problem");
+		  }
+		  
+		  
+		  
+		 
+		
+		 
+		  
+		
+		
+		 
+		
+		 
+		
+		 
+		 
+		
+
+		
+	}
+
+}

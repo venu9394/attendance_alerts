@@ -1,0 +1,286 @@
+
+
+function myFunction()
+	{
+
+
+	 var employeeid=$("#emp_id").val();
+	 
+	// alert(employeeid);
+	 
+	/*    document.getElementById("rentonly").checked = true;
+        document.getElementById("rentonly1").checked = false;
+        document.getElementById("rentonly2").checked = false;
+			//alert("data"+responseData[1].length);
+			
+    	housing('rent');*/
+	 
+		 try {
+				 
+				$.ajax({
+					type : "get",
+					url : "LoadData",
+					data:{employeeid:employeeid,Type:"80C-Details"},
+					success : function(responseData, textStatus, jqXHR) {
+					//	alert(responseData[4].length);
+
+						if(responseData[0].length==0 && responseData[2].length==0 && responseData[4].length==0  )
+			    		{
+							alert("0123");
+							$("#dataTable").empty();
+							 $("#dataTable1").empty();
+							$('#80c_pf_estimate').val('');
+							$('#80c_tution_estimate').val('');
+							//  $('#FF0005').val($scope.temp.LIFE_IPS);////Life Insurance Premium
+							$('#80c_hl_estimate').val('');
+							$('#80c_nsc_estimate').val('');
+							$('#80c_post_estimate').val('');
+							$('#80c_ul_estimate').val('');
+							$('#80c_eq_estimate').val('');
+							$('#80ccc_licp_estimate').val('');
+							$('#80ccd_pscg_estimate').val('');
+							$('#80c_sss_estimate').val('');
+							$('#80c_fd_estimate').val('');
+							$('#80c_mf_estimate').val('');
+							$('#80c_bond_estimate').val('');
+							$('#80c_others_estimate').val('');
+							$('#80C_final').val('');
+							$('#FF0005').val('0');	
+							
+							
+					      $('#80d_medical_estimate').val('');
+					      $('#80DD').val('Selectlimit');
+					      $('#80dd_handicapped_estimate').val('');
+					      $('#80DDB').val('Selectlimit');
+					      $('#80ddb_treatment_estimate').val('');
+					      $('#80U').val('Selectlimit');
+					      $('#80u_disability_estimate').val('');
+					      $('#80e_eduloan_estimate').val('');
+					      $('#80cgg_rgsavings_estimate').val('');
+					      $('#80tta_deposit_estimate').val('');
+					      $('#org').val('Select Organization');
+					      $('#donation_estimate').val('');
+					      
+					      
+					      
+					      
+					      
+					      
+			    		}
+						
+						else if(responseData[0].length==1 && responseData[2].length==1 && responseData[4].length==1)
+	    				  {
+
+							var data=JSON.stringify(responseData[0]);
+
+							var data2=JSON.stringify(responseData[2]);
+
+							var data3=JSON.stringify(responseData[4]);
+
+						//	alert(data3);
+							
+							var data_1 = data.replace("[", "").replace("]", "");
+
+							var data_2=data2.replace("[", "").replace("]", "");
+
+							var  data_3=data3.replace("[", "").replace("]", "");
+							//	 alert($scope.data);
+
+							var  jsondata_1 = JSON.parse(data_1);
+
+							var jsondata_2=JSON.parse(data_2);
+
+							var jsondata_3=JSON.parse(data_3);
+							
+							  var boolean= false;
+
+	    		// alert(jsondata_1.PHC);
+	    		 
+	    			    $('#80c_pf_estimate').val(jsondata_1.PUBLICPF);
+	    			    $('#80c_tution_estimate').val(jsondata_1.TUITION_FEE_KIDS);
+	    			  //  $('#FF0005').val($scope.temp.LIFE_IPS);////Life Insurance Premium
+	    			    $('#80c_hl_estimate').val(jsondata_1.PRINCIPAL_HOUSINGLOAN);
+	    			    $('#80c_nsc_estimate').val(jsondata_1.NATIONALSAVINGCERTIFICATES);
+	    			    $('#80c_post_estimate').val(jsondata_1.POSAVINGS);
+	    			    $('#80c_ul_estimate').val(jsondata_1.UNIT_LIP);
+	    			    $('#80c_eq_estimate').val(jsondata_1.EQUITYLINKED_SAVINGS);
+	    				$('#80ccc_licp_estimate').val(jsondata_1.LIFE_IPS);
+	    				$('#80ccd_pscg_estimate').val(jsondata_1.CPSCG);
+	    				$('#80c_sss_estimate').val(jsondata_1.SUKANYA_SAMRIDDI);
+	    				$('#80c_fd_estimate').val(jsondata_1.FDs);
+	    	            $('#80c_mf_estimate').val(jsondata_1.MFD);
+	    				$('#80c_bond_estimate').val(jsondata_1.TAX_SAVINGBONDS);
+	    				$('#80c_others_estimate').val(jsondata_1.OTHERS);
+	    				$('#80C_final').val(jsondata_1.FINAL_80C);
+	    	
+	    				
+	    				  $('#80d_medical_estimate').val(jsondata_2.PHC);
+	    			      $('#80DD').val(jsondata_2.S80DD);
+	    			      $('#80dd_handicapped_estimate').val(jsondata_2.S80DD1);
+	    			      $('#80DDB').val(jsondata_2.S80DDB);
+	    			      $('#80ddb_treatment_estimate').val(jsondata_2.S80DDB1);
+	    			      $('#80U').val(jsondata_2.S80U);
+	    			      $('#80u_disability_estimate').val(jsondata_2.S80U1);
+	    			      $('#80e_eduloan_estimate').val(jsondata_2.S80E);
+	    			      $('#80cgg_rgsavings_estimate').val(jsondata_2.S80CCG);
+	    			      $('#80tta_deposit_estimate').val(jsondata_2.S80TTA);
+	    			      $('#org').val(jsondata_2.S80G_NAME);  
+	    			      $('#donation_estimate').val(jsondata_2.S80G_AMT);
+	    				 //alert("80D_calling");
+	    				
+	    			//	toggle_it('acc2');
+	    			//	myFunction('80D-Details');
+	    			//	alert(jsondata_3.HOUSETYPE);
+	    	
+	    			      if(jsondata_3.HOUSETYPE=='rent')
+				        	{
+				        	 
+				        	 document.getElementById("rentonly").checked = true;
+				        	 
+				        	  housing(jsondata_3.HOUSETYPE);
+				        	  
+				        	 $('#address').val(jsondata_3.ADDRESS);
+					         $('#pancard').val(jsondata_3.PAN);
+					         $('#rent_amount').val(jsondata_3.RENTAMT);
+					         $('#other_income_estimate').val(jsondata_3.OTHERINCOME);
+					         
+					        					         
+				        	}
+				        
+				        
+				        else if(jsondata_3.HOUSETYPE=='ownhouse')
+				        	{
+				        	 
+					         document.getElementById("rentonly1").checked = true;
+					         
+					         housing(jsondata_3.HOUSETYPE);
+					         //$('#rentonly1')
+					         
+				        	 $('#bankname').val(jsondata_3.OHLBANK);
+				        	 $('#loanamount').val(jsondata_3.OHLAMT);
+				        	 $('#datepicker').val(jsondata_3.OHLDATE);
+				        	 $('#principal_amount').val(jsondata_3.OHLPAMT);
+				             $('#interest').val(jsondata_3.OHLIAMT);
+				        	 $('#propertyincome').val(jsondata_3.LETOUT);
+				        	 $('#muncipaltaxes').val(jsondata_3.MTP);
+				        	 $('#80ee_interestedu_estimate').val(jsondata_3.S80EE);
+				        	 $('#other_income_estimate').val(jsondata_3.OTHERINCOME);
+				        	 
+				        
+				        	
+				        	}
+				        
+				        else if(jsondata_3.HOUSETYPE=='ownhousewithproperty')
+				        	{
+	                           document.getElementById("rentonly2").checked = true;
+					         
+					         housing(jsondata_3.HOUSETYPE);
+					         
+					         $('#address').val(jsondata_3.ADDRESS);
+					         $('#pancard').val(jsondata_3.PAN);
+					         $('#rent_amount').val(jsondata_3.RENTAMT);
+				        	$('#bankname').val(jsondata_3.OHLBANK);
+				        	$('#loanamount').val(jsondata_3.OHLAMT);
+				        	$('#datepicker').val(jsondata_3.OHLDATE);
+				        	$('#principal_amount').val(jsondata_3.OHLPAMT);
+				            $('#interest').val(jsondata_3.OHLIAMT);
+				        	$('#propertyincome').val(jsondata_3.LETOUT);
+				        	$('#muncipaltaxes').val(jsondata_3.MTP);
+				        	$('#80ee_interestedu_estimate').val(jsondata_3.S80EE);
+				        	$('#other_income_estimate').val(jsondata_3.OTHERINCOME);
+				        	
+				        	 
+				        	}	    			      
+	    			      
+	    			      
+	    			      
+	    			      
+	    			      
+	    				  }
+						
+						if(responseData[1].length>0 || responseData[3].length>0)
+	    				  {
+	    				  
+	    				 //var jsondata_2 = JSON.parse(responseData[1]);
+	    				     
+	 			         loadData(responseData[1]);
+	 			         
+	 			        loadData1(responseData[3]);
+	    				  
+	    				  }
+						
+						
+						
+						
+						
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log(errorThrown);
+					 
+						alert("Error;" + textStatus);
+						alert("Error;" + errorThrown);
+
+						alert("jqXHR;" + jqXHR.status);
+
+					}
+				});
+		 } catch (err) {
+
+				alert(err + ":at Last");
+			}
+		 
+		 
+		 
+		 
+		 
+		
+		 
+		
+	/*}*/
+}
+
+
+function loadData(datas){
+	
+	//alert(datas.length);
+	 
+	 $("#dataTable").empty();
+// $("#dataTable1").empty();
+	 document.getElementById("FF0005").value="0";
+//	 document.getElementById("FF0015").value="0";
+    $.each(datas, function(index, value){
+    	
+    	
+    	try{
+    	addRow(value);
+    //	alert(value);
+    //	addRow_1(value);
+    	
+    	
+    	}catch(err){
+    		alert(err.message);
+    		
+    	}
+      
+    });
+
+}
+
+
+function loadData1(datas){
+	 
+	 $("#dataTable1").empty();
+	 document.getElementById("FF0015").value="0";
+   $.each(datas, function(index, value){
+   	
+//   	alert(value+":::@@@@");
+   	try{
+   		addRow_1(value);
+   	}catch(err){
+   		alert(err.message);
+   		
+   	}
+     
+   });
+
+}

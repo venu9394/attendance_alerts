@@ -1,0 +1,987 @@
+ package com.hcl.servlets;
+ 
+import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.servlet.http.HttpServletRequest;
+
+public class Tdscal extends javax.servlet.http.HttpServlet
+{
+  public Tdscal() {}
+  
+  public void doPost(HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, java.io.IOException
+  {
+   
+    request.getSession(true);
+    java.io.PrintWriter out = response.getWriter();
+    response.setContentType("text/html");
+    
+
+
+    java.util.Enumeration FormData = request.getParameterNames();
+    java.util.Map formMap = new java.util.HashMap();
+    while (FormData.hasMoreElements())
+    {
+      String Key = FormData.nextElement().toString();
+      String Value = request.getParameter(Key);
+      formMap.put(Key, Value);
+    }
+    
+
+    System.out.println("formData--> " + formMap);
+    
+    String id = request.getParameter("emp_id");
+    String name = request.getParameter("full_name");
+    String department = request.getParameter("department");
+    String designation = request.getParameter("designation");
+    String address = request.getParameter("emp_address");
+    String mobile = request.getParameter("contact");
+    String hq = request.getParameter("hq");
+    String age = request.getParameter("age");
+    String health = request.getParameter("medical_estimate");
+    Connection con = null;
+    
+
+    String $actualcost = request.getParameter("actualcost");
+    String $actualcostbox = request.getParameter("actualcostbox");
+    String $stloan = request.getParameter("checkbox1");
+    
+    if (($actualcost == null) || ($actualcost.trim().length() == 0)) {
+      $actualcost = "0";
+    }
+    if ($actualcostbox == null) {
+      $actualcostbox = "false";
+    }
+    if ($stloan == null) {
+      $stloan = "false";
+    }
+    
+
+
+
+    System.out.println("Actucal Cost:-->" + $actualcost + "<---box--->" + $actualcostbox);
+    
+
+
+    String MTP = request.getParameter("municpaltaxes");
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    String LICFINAL = request.getParameter("lic_estimate");
+    
+
+
+    String PPF = request.getParameter("pf_estimate");
+    String TUITION = request.getParameter("tf_estimate");
+    String PPHL = request.getParameter("hl_estimate");
+    String NSC = request.getParameter("nsc_estimate");
+    String POS = request.getParameter("post-estimate");
+    String ULIP = request.getParameter("ul_estimate");
+    String ELSMF = request.getParameter("eq_estimate");
+    String LIPS = request.getParameter("licp_estimate");
+    String CNPS = request.getParameter("pscg_estimate");
+    String SSA = request.getParameter("sss_estimate");
+    String FD = request.getParameter("fd_estimate");
+    String MF = request.getParameter("mf_estimate");
+    String TSB = request.getParameter("bond_estimate");
+    String Others = request.getParameter("others_estimate");
+    
+
+
+
+
+
+
+
+    String NSCO = "0";
+    String ELS = request.getParameter("eq_estimate");
+    String HLP = request.getParameter("hl_estimate");
+    String ELSO = request.getParameter("ul_estimate");
+    String STAMP = request.getParameter("STAMP");
+    
+    String MED = request.getParameter("med");
+    String MED2 = request.getParameter("med2");
+    String MED3 = request.getParameter("med3");
+    String MED4 = request.getParameter("med4");
+    String MED6 = request.getParameter("med6");
+    String MED7 = request.getParameter("med7");
+    
+    String MEDRD1 = request.getParameter("medrelationid1");
+    String MEDRD2 = request.getParameter("medrelationid2");
+    
+    String House = request.getParameter("houseaddrs");
+    String HouseFinal = request.getParameter("housefinal");
+    
+
+
+    String MEDFINAL = request.getParameter("medi_estimate");
+    
+
+
+
+
+    String S80DD = "0.00";
+    String MEHD = request.getParameter("80DD");
+    String E80DD = request.getParameter("handicapped_estimate");
+    
+    if (MEHD.equalsIgnoreCase("80DD_limit1")) {
+      S80DD = "75000";
+    }
+    if (MEHD.equalsIgnoreCase("80DD_limit2")) {
+      S80DD = "125000";
+    }
+    
+    double MedicalTotal80DD = 0.0D;
+    
+    if (!MEHD.equalsIgnoreCase("Selectlimit")) {
+      MedicalTotal80DD = Math.min(Double.parseDouble(S80DD), Double.parseDouble(E80DD));
+    }
+    
+
+    System.out.println("Consideration Value Under 80DD Handicapped--->" + S80DD);
+    System.out.println("Entry By User Under 80DD Handicapped--->" + E80DD);
+    System.out.println("Eligible Value Under 80DD Handicapped--->" + MedicalTotal80DD);
+    
+
+
+
+
+    String S80DDB = "0.00";
+    String MT = request.getParameter("80DDB");
+    String E80DDB = request.getParameter("treatment_estimate");
+    
+    if (MT.equalsIgnoreCase("80DDB_limit1")) {
+      S80DDB = "40000";
+    }
+    if (MT.equalsIgnoreCase("80DDB_limit2")) {
+      S80DDB = "100000";
+    }
+    
+    if (MT.equalsIgnoreCase("80DDB_limit3")) {
+      S80DDB = "80000";
+    }
+    
+
+    double MedicalTotal80DDB = 0.0D;
+    if (!MT.equalsIgnoreCase("Selectlimit")) {
+      MedicalTotal80DDB = Math.min(Double.parseDouble(S80DDB), Double.parseDouble(E80DDB));
+    }
+    
+
+    System.out.println("Consideration Value Under Medical 80DDB---->" + S80DDB);
+    System.out.println("Entry Value By User  Under Medical 80DDB---->" + E80DDB);
+    System.out.println("Final Eligible Value  Under Medical 80DDB---->" + MedicalTotal80DDB);
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    String S80U = "0.00";
+    String SC80U = request.getParameter("80U");
+    String SC80Uuser = request.getParameter("disability_estimate");
+    
+
+    if (SC80U.equalsIgnoreCase("80U_limit1"))
+      S80U = "75000";
+    if (SC80U.equalsIgnoreCase("80U_limit2")) {
+      S80U = "125000";
+    }
+    double S80UFINAL = 0.0D;
+    if (!SC80U.equalsIgnoreCase("Selectlimit")) {
+      S80UFINAL = Math.min(Double.parseDouble(S80U), Double.parseDouble(SC80Uuser));
+    }
+    
+
+
+    System.out.println("Consideration Value Under Medical S80U---->" + S80U);
+    System.out.println("Entry Value By User  Under Medical User---->" + SC80Uuser);
+    System.out.println("Final Eligible Value  Under Medical FINAL---->" + S80UFINAL);
+    
+
+
+
+
+    String PHCE = "5000";
+    String PHC = request.getParameter("medical_estimate");
+    double PHCFINAL = Math.min(Double.parseDouble(PHC), Double.parseDouble(PHCE));
+    System.out.println("Final Eligible Value  Under Preventive Health Checkup--->" + PHCFINAL);
+    
+
+
+
+
+
+    String S80E = request.getParameter("eduloan_estimate");
+    
+
+
+    String S80CCG = request.getParameter("rgequity_estimate");
+    String LS80CCG = "25000";
+    double I = Math.round(Double.parseDouble(S80CCG) / 2.0D);
+    
+    double S80CCGFINAL = Math.min(I, Double.parseDouble(LS80CCG));
+    System.out.println("Entry under Under Rajiv Gandhi--->" + S80CCGFINAL);
+    
+
+
+    String S80TTA = request.getParameter("deposit_estimate");
+    if (S80TTA == null) {
+      S80TTA = "0.00";
+    }
+    
+    String S80TTAAMT = request.getParameter("donation_estimate");
+    if (S80TTAAMT == null) {
+      S80TTAAMT = "0.00";
+    }
+    
+    int localage = Integer.parseInt(age);
+    String LS80TTA = "10000";
+    if (localage > 60) {
+      LS80TTA = "50000";
+    }
+    
+    double S80TTAFINAL = Math.min(Double.parseDouble(LS80TTA), Double.parseDouble(S80TTA));
+    System.out.println("Entry By User Under 80TTA ===>" + S80TTA);
+    System.out.println("eligible Under 80TTA ===>" + S80TTAFINAL);
+    
+
+
+
+    String Donation = request.getParameter("donationlist");
+    String[] parts = null;
+    String part1 = "0";
+    String part2 = "0";
+    if (!Donation.equalsIgnoreCase("Select Organization")) {
+      parts = Donation.split("~");
+      part1 = parts[0];
+      part2 = parts[1];
+    }
+    System.out.println("Donation-Organization--->" + Donation);
+    
+
+
+    String CFINAL = request.getParameter("80C_final");
+    String MEDFINALU80D = request.getParameter("80D_final");
+    
+
+
+    String RHADD = request.getParameter("address");
+    String RHPAN = request.getParameter("pancard");
+    String RHRENT = request.getParameter("rent_amount");
+    
+
+    String OHHLBANK = request.getParameter("bankname");
+    String OHHLAMT = request.getParameter("loanamount");
+    String OHHLDATE = request.getParameter("date");
+    String OHHLPAMT = request.getParameter("principal_amount_house");
+    String OHHLIAMT = request.getParameter("interest");
+    
+    String OHHLLETOUT = request.getParameter("propertyincome");
+    String OHHL80EE = request.getParameter("interestdedu_estimate");
+    
+    if ((RHADD == null) || (RHADD.trim().length() == 0)) {
+      RHADD = "0";
+    }
+    if ((RHPAN == null) || (RHPAN.trim().length() == 0)) {
+      RHPAN = "0";
+    }
+    if ((RHRENT == null) || (RHRENT.trim().length() == 0)) {
+      RHRENT = "0";
+    }
+    if ((OHHLBANK == null) || (OHHLBANK.trim().length() == 0)) {
+      OHHLBANK = "0";
+    }
+    if ((OHHLAMT == null) || (OHHLAMT.trim().length() == 0)) {
+      OHHLAMT = "0";
+    }
+    if ((OHHLDATE == null) || (OHHLDATE.trim().length() == 0)) {
+      OHHLDATE = "0000-00-00";
+    }
+    if ((OHHLPAMT == null) || (OHHLPAMT.trim().length() == 0)) {
+      OHHLPAMT = "0";
+    }
+    if ((OHHLIAMT == null) || (OHHLIAMT.trim().length() == 0)) {
+      OHHLIAMT = "0";
+    }
+    if ((OHHLLETOUT == null) || (OHHLLETOUT.trim().length() == 0)) {
+      OHHLLETOUT = "0";
+    }
+    if ((OHHL80EE == null) || (OHHL80EE.trim().length() == 0)) {
+      OHHL80EE = "0";
+    }
+    
+
+
+
+
+
+
+
+    String OI = request.getParameter("otherincome_estimate");
+    
+
+    String S10SELECT = request.getParameter("sec10");
+    String S10TOTAL = request.getParameter("estimate_lta");
+    
+
+    String S10DATE1 = request.getParameter("date1");
+    String S10DATE2 = request.getParameter("date2");
+    String S10FROM1 = request.getParameter("from1");
+    String S10TO1 = request.getParameter("to1");
+    String S10EMP1 = request.getParameter("employee1");
+    String S10T1 = request.getParameter("travel1");
+    String S10S1 = request.getParameter("m");
+    String S10AMT1 = request.getParameter("estimated_amount_1");
+    
+
+    String S10DATE3 = request.getParameter("date3");
+    String S10DATE4 = request.getParameter("date4");
+    String S10FROM2 = request.getParameter("from2");
+    String S10TO2 = request.getParameter("to2");
+    String S10EMP2 = request.getParameter("employee2");
+    String S10T2 = request.getParameter("travel2");
+    String S10S2 = request.getParameter("n");
+    String S10AMT2 = request.getParameter("estimated_amount_2");
+    
+
+
+    String Kidcount = request.getParameter("child");
+    String Kname = request.getParameter("child1");
+    String Kclass = request.getParameter("child1_studying");
+    String Kschool = request.getParameter("child1_school_college");
+    
+    String Kname1 = request.getParameter("child2");
+    String Kclass1 = request.getParameter("child2_studying");
+    String Kschool1 = request.getParameter("child2_school_college");
+    
+
+
+
+
+
+    String INISTITUTE = request.getParameter("inistitutename");
+    String LOANAMT = request.getParameter("loanamt");
+    String DATE = request.getParameter("date");
+    String PAMT = request.getParameter("pincamt");
+    String INTEREST = request.getParameter("interest");
+    
+    String emplinsert = request.getParameter("Submitfinal");
+    
+
+
+
+
+
+
+
+    String Amt_policy = null;
+    String Amt_0 = null;
+    String Amt_1 = null;
+    String Amt_2 = null;
+    String Amt_3 = null;
+    String[] ParamValues1 = null;
+    String[] ParamValues = null;
+    
+
+
+
+
+
+
+
+
+
+    try
+    {
+      ParamValues1 = request.getParameterValues("80D_chkbox");
+      ParamValues = request.getParameterValues("chkbox");
+    }
+    catch (Exception h)
+    {
+      h.printStackTrace();
+    }
+    
+
+    String Key = null;
+    
+
+
+    try
+    {
+      Class.forName("com.mysql.jdbc.Driver");
+      System.out.println("Driver loaded....!");
+      
+
+      try
+      {
+        con = com.hcl.util.Util.getConnection();
+        System.out.println("Connection Established....!");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      
+
+
+
+
+
+      StringBuffer saving = new StringBuffer();
+      StringBuffer hrent = new StringBuffer();
+      StringBuffer hloan = new StringBuffer();
+      
+
+
+      StringBuffer lic = new StringBuffer();
+      StringBuffer lic1 = new StringBuffer();
+      StringBuffer lic2 = new StringBuffer();
+      StringBuffer lic3 = new StringBuffer();
+      StringBuffer licothers = new StringBuffer();
+      StringBuffer mediclaim1 = new StringBuffer();
+      StringBuffer mediclaim2 = new StringBuffer();
+      StringBuffer kid1 = new StringBuffer();
+      StringBuffer kid2 = new StringBuffer();
+      
+
+
+      if ((emplinsert != null) && (emplinsert.equalsIgnoreCase("Save")))
+      {
+
+        saving.append("INSERT INTO TEST.TBL_IT_EMP_DETAILS");
+        saving.append(" (");
+        saving.append("FY, EMPLOYEEID, NAME, DEPT, DESIGNATION, ADDRESS, CONTACT, HQ, AGE, STATUS, LUPDATE");
+        saving.append(" )");
+        saving.append(" VALUES");
+        saving.append(" (");
+        
+        saving.append(" (SELECT CASE WHEN MONTH(CURDATE())<=3 THEN CONCAT(YEAR(CURDATE())-1, '-',YEAR(CURDATE()))");
+        saving.append(" ELSE CONCAT(YEAR(CURDATE()),'-', YEAR(CURDATE())+1) END) ,");
+        saving.append(id + ",");
+        saving.append("'" + name + "',");
+        saving.append("'" + department + "',");
+        saving.append("'" + designation + "',");
+        saving.append("'" + address + "',");
+        saving.append("'" + mobile + "',");
+        saving.append("'" + hq + "',");
+        saving.append(age + ",");
+        saving.append(" 'S',");
+        saving.append(" now()");
+        saving.append(" )");
+        System.out.println("Tbl-1-->" + saving.toString());
+        int rs = 0;
+        PreparedStatement ps = con.prepareStatement(saving.toString(), 1);
+        
+        rs = ps.executeUpdate();
+        java.sql.ResultSet generatedKeys = null;
+        
+        generatedKeys = ps.getGeneratedKeys();
+        
+
+
+        if (rs > 0)
+        {
+
+
+          if ((generatedKeys != null) && (generatedKeys.next())) {
+            Long primaryKey = Long.valueOf(generatedKeys.getLong(1));
+            
+            Key = primaryKey.toString();
+          }
+        }
+      }
+      
+
+
+
+
+      String tbl2 = "insert into test.tbl_it_emp_80c_details (RefNo,EMPLOYEEID, POLICYNO, FOR_RELATION, POLICY_AMOUNT, TOTAL_PREMIUM, FINAL_TOTAL) values(?,?,?,?,?,?,?)";
+      
+      if ((ParamValues != null) && (ParamValues.length > 0)) {
+        try {
+          PreparedStatement ps = con.prepareStatement(tbl2.toString());
+          for (int i = 0; i < ParamValues.length; i++)
+          {
+            Amt_policy = request.getParameter("Amt_policy_" + ParamValues[i]);
+            Amt_0 = request.getParameter("Amt_0_" + ParamValues[i]);
+            Amt_1 = request.getParameter("Amt_1_" + ParamValues[i]);
+            Amt_2 = request.getParameter("Amt_2_" + ParamValues[i]);
+            
+
+            ps.setString(1, Key);
+            ps.setString(2, id);
+            ps.setString(3, Amt_policy);
+            ps.setString(4, Amt_0);
+            ps.setString(5, Amt_1);
+            ps.setString(6, Amt_2);
+            ps.setString(7, LICFINAL);
+            ps.executeUpdate();
+            System.out.println("LIC Executed");
+          }
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+        }
+      }
+      
+
+
+
+      String tbl3 = "INSERT INTO test.tbl_it_emp_kids_exemption (RefNo, EMPLOYEEID, NOOFKIDS, KIDNAME, CLASS, SCHOOL_NAME) values (?,?,?,?,?,?) ";
+      try
+      {
+        PreparedStatement ps = con.prepareStatement(tbl3.toString());
+        ps.setString(1, Key);
+        ps.setString(2, id);
+        ps.setString(3, Kidcount);
+        ps.setString(4, Kname);
+        ps.setString(5, Kclass);
+        ps.setString(6, Kschool);
+        if ((Kname != null) && (Kname.length() != 0)) {
+          ps.executeUpdate();
+          System.out.println("KID1");
+        }
+      }
+      catch (Exception p) {
+        p.printStackTrace();
+      }
+      
+
+      String tbl4 = "INSERT INTO test.tbl_it_emp_kids_exemption (RefNo, EMPLOYEEID, NOOFKIDS, KIDNAME, CLASS, SCHOOL_NAME) values (?,?,?,?,?,?) ";
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl4.toString());
+        ps.setString(1, Key);
+        ps.setString(2, id);
+        ps.setString(3, Kidcount);
+        ps.setString(4, Kname1);
+        ps.setString(5, Kclass1);
+        ps.setString(6, Kschool1);
+        if ((Kname != null) && (Kname.length() != 0)) {
+          ps.executeUpdate();
+          System.out.println("KID2");
+        }
+      }
+      catch (Exception q) {
+        q.printStackTrace();
+      }
+      
+
+
+      String tbl5 = "INSERT INTO test.tbl_it_emp_80d_details (RefNo, EMPLOYEEID, POLICYNO, FOR_RELATION, CITIZEN, POLICY_AMOUNT, TOTAL_PREMIUM, FINAL_TOTAL, STATUS, LUPDATE) values(?,?,?,?,?,?,?,?,?,?)";
+      
+      if ((ParamValues1 != null) && (ParamValues1.length > 0)) {
+        try {
+          PreparedStatement ps = con.prepareStatement(tbl5.toString());
+          for (int i = 0; i < ParamValues1.length; i++)
+          {
+            Amt_policy = request.getParameter("80D_policy_" + ParamValues1[i]);
+            Amt_0 = request.getParameter("80D_0_" + ParamValues1[i]);
+            Amt_1 = request.getParameter("80D_1_" + ParamValues1[i]);
+            Amt_2 = request.getParameter("80D_2_" + ParamValues1[i]);
+            Amt_3 = request.getParameter("80D_3_" + ParamValues1[i]);
+            
+
+            ps.setString(1, Key);
+            ps.setString(2, id);
+            ps.setString(3, Amt_policy);
+            ps.setString(4, Amt_0);
+            ps.setString(5, Amt_1);
+            ps.setString(6, Amt_2);
+            ps.setString(7, Amt_3);
+            ps.setString(8, MEDFINAL);
+            ps.setString(9, "S");
+            ps.setTimestamp(10, new java.sql.Timestamp(System.currentTimeMillis()));
+            
+            if ((MEDFINAL != null) && (MEDFINAL.length() != 0)) {
+              ps.executeUpdate();
+              System.out.println("Mediclaim Executed");
+            }
+            
+          }
+        }
+        catch (Exception r)
+        {
+          r.printStackTrace();
+        }
+      }
+      
+
+
+
+
+      String tbl6 = "INSERT INTO TEST.TBL_IT_EMP_80C_OTHERS (RefNo, EMPLOYEEID, MFD, PUBLICPF, FDs, POSAVINGS, NATIONALSAVINGCERTIFICATES, UNIT_LIP, LIFE_IPS, PRINCIPAL_HOUSINGLOAN, EQUITYLINKED_SAVINGS, TAX_SAVINGBONDS, SUKANYA_SAMRIDDI, CPSCG, TUITION_FEE_KIDS, OTHERS, FINAL_80C, LUPDATE) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl6.toString());
+        ps.setString(1, Key);
+        ps.setString(2, id);
+        ps.setString(3, MF);
+        ps.setString(4, PPF);
+        ps.setString(5, FD);
+        ps.setString(6, POS);
+        ps.setString(7, NSC);
+        ps.setString(8, ULIP);
+        ps.setString(9, LIPS);
+        ps.setString(10, PPHL);
+        ps.setString(11, ELSMF);
+        ps.setString(12, TSB);
+        ps.setString(13, SSA);
+        ps.setString(14, CNPS);
+        ps.setString(15, TUITION);
+        ps.setString(16, Others);
+        ps.setString(17, CFINAL);
+        ps.setTimestamp(18, new java.sql.Timestamp(System.currentTimeMillis()));
+        if ((CFINAL != null) && (!CFINAL.equalsIgnoreCase("0"))) {
+          ps.executeUpdate();
+          System.out.println("80C OTHERS");
+        }
+      }
+      catch (Exception s) {
+        s.printStackTrace();
+      }
+      
+
+      StringBuffer tbl7 = new StringBuffer();
+      tbl7.append("INSERT INTO TEST.TBL_IT_EMP_80D_OTHERS ");
+      tbl7.append("(");
+      tbl7.append("RefNo, EMPLOYEEID, PHC, S80DD, S80DD1, S80DD2, S80DDB, S80DDB1, S80DDB2, S80U, S80U1, S80U2, S80E, S80CCG, S80CCG1, S80CCG2, S80TTA, S80TTA1,  S80G, S80G_NAME, S80G_AMT, TOTAL_80D, STATUS, LUPDATE");
+      tbl7.append(")");
+      tbl7.append(" VALUES ");
+      tbl7.append("(");
+      tbl7.append(" " + Key);
+      tbl7.append(" ," + id);
+      tbl7.append(" ," + PHC);
+      tbl7.append(" ," + S80DD);
+      tbl7.append(" ," + E80DD);
+      tbl7.append(" ," + MedicalTotal80DD);
+      tbl7.append(" ," + S80DDB);
+      tbl7.append(" ," + E80DDB);
+      tbl7.append(" ," + MedicalTotal80DDB);
+      tbl7.append(" ," + S80U);
+      tbl7.append(" ," + SC80Uuser);
+      tbl7.append(" ," + S80UFINAL);
+      tbl7.append(" ," + S80E);
+      tbl7.append(" ," + I);
+      tbl7.append(" ," + S80CCGFINAL);
+      tbl7.append(" ," + S80CCG);
+      tbl7.append(" ," + S80TTA);
+      tbl7.append(" ," + S80TTAFINAL);
+      tbl7.append(" ," + part1);
+      tbl7.append(" ,UPPER('" + part2 + "')");
+      tbl7.append(" ," + S80TTAAMT);
+      tbl7.append(" ," + MEDFINALU80D);
+      tbl7.append(" ,1001");
+      tbl7.append(" ,NOW()");
+      tbl7.append(")");
+      System.out.println(tbl7.toString());
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl7.toString());
+        if ((MEDFINALU80D != null) && (!MEDFINALU80D.equalsIgnoreCase("0"))) {
+          ps.executeUpdate();
+          System.out.println("80D OTHERS");
+        }
+      }
+      catch (Exception t) {
+        t.printStackTrace();
+      }
+      
+
+
+
+
+
+
+      String RentHouse = request.getParameter("rentonly");
+      if (RentHouse.equalsIgnoreCase("rent")) {
+        OHHLBANK = "NO FILL";
+        OHHLAMT = "0";
+        OHHLDATE = "00-00-0000";
+        OHHLPAMT = "0";
+        OHHLIAMT = "0";
+        OHHLLETOUT = "0";
+        OHHL80EE = "0";
+      }
+      
+
+      if (RentHouse.equalsIgnoreCase("ownhouse")) {
+        RHADD = "0";
+        RHPAN = "NO FILL";
+        RHRENT = "0";
+      }
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+      StringBuffer tbl8 = new StringBuffer();
+      tbl8.append("INSERT INTO TEST.TBL_IT_EMP_RENTHOUSE");
+      tbl8.append("(");
+      tbl8.append("RefNo, EMPLOYEEID, ADDRESS, PAN, RENTAMT, OHLBANK, OHLAMT, OHLDATE, OHLPAMT, OHLIAMT, LETOUT, MTP, S80EE, HOUSETYPE, OTHERINCOME, STATUS, LUPDATE, FIRSTLOAN, ISCONSTRUCTION, ACTUALCOST");
+      tbl8.append(")");
+      tbl8.append(" VALUES ");
+      tbl8.append("(");
+      tbl8.append(Key);
+      tbl8.append(" ," + id);
+      tbl8.append(" ,'" + RHADD + "'");
+      tbl8.append(" ,'" + RHPAN + "'");
+      tbl8.append(" ," + RHRENT);
+      tbl8.append(" ,'" + OHHLBANK + "'");
+      tbl8.append(" ," + OHHLAMT);
+      tbl8.append(" ,'" + OHHLDATE + "'");
+      tbl8.append(" ," + OHHLPAMT);
+      tbl8.append(" ," + OHHLIAMT);
+      tbl8.append(" ," + OHHLLETOUT);
+      tbl8.append(" ," + MTP);
+      tbl8.append(" ," + OHHL80EE);
+      tbl8.append(", '" + RentHouse + "'");
+      tbl8.append(" ," + OI);
+      tbl8.append(" ,1001");
+      tbl8.append(" ,NOW()");
+      
+      tbl8.append(" ,'" + $stloan + "'");
+      tbl8.append(" ,'" + $actualcostbox + "'");
+      tbl8.append(" ," + $actualcost);
+      
+      tbl8.append(")");
+      System.out.println(tbl8.toString());
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl8.toString());
+        
+        ps.executeUpdate();
+        System.out.println("Address Is--->" + RHADD);
+        System.out.println("Rent House Done");
+      }
+      catch (Exception u) {
+        u.printStackTrace();
+      }
+      
+
+      StringBuffer tbl9 = new StringBuffer();
+      tbl9.append("INSERT INTO test.tbl_it_emp_lta");
+      tbl9.append("(");
+      tbl9.append("RefNo, EMPLOYEEID, DFROM, DTO, TFROM, TTO, NAME, RELATION, TMODE, ESTIMAMT, SUM, STATUS, LUPDATE");
+      tbl9.append(")");
+      tbl9.append("VALUES");
+      tbl9.append("(");
+      tbl9.append(Key);
+      tbl9.append(" ," + id);
+      tbl9.append(" ,'" + S10DATE1 + "'");
+      tbl9.append(" ,'" + S10DATE2 + "'");
+      tbl9.append(" ,'" + S10FROM1 + "'");
+      tbl9.append(" ,'" + S10TO1 + "'");
+      tbl9.append(" ,'" + S10EMP1 + "'");
+      tbl9.append(" ,'" + S10S1 + "'");
+      tbl9.append(" ,'" + S10T1 + "'");
+      tbl9.append(" ," + S10AMT1);
+      tbl9.append(" ," + S10TOTAL);
+      tbl9.append(" ,1001");
+      tbl9.append(" ,NOW()");
+      tbl9.append(")");
+      
+      try
+      {
+        PreparedStatement ps = con.prepareStatement(tbl9.toString());
+        if ((S10SELECT.equalsIgnoreCase("no")) && (S10TOTAL != null) && (S10TOTAL.trim().length() != 0) && (!S10TOTAL.equalsIgnoreCase("0")) && (S10TOTAL != null)) {
+          ps.executeUpdate();
+          System.out.println("LTA-1 Done");
+        }
+      }
+      catch (Exception v) {
+        v.printStackTrace();
+      }
+      
+
+      StringBuffer tbl10 = new StringBuffer();
+      tbl10.append("INSERT INTO test.tbl_it_emp_lta");
+      tbl10.append("(");
+      tbl10.append("RefNo, EMPLOYEEID, DFROM, DTO, TFROM, TTO, NAME, RELATION, TMODE, ESTIMAMT, SUM, STATUS, LUPDATE");
+      tbl10.append(")");
+      tbl10.append("VALUES");
+      tbl10.append("(");
+      tbl10.append(Key);
+      tbl10.append(" ," + id);
+      tbl10.append(" ,'" + S10DATE3 + "'");
+      tbl10.append(" ,'" + S10DATE4 + "'");
+      tbl10.append(" ,'" + S10FROM2 + "'");
+      tbl10.append(" ,'" + S10TO2 + "'");
+      tbl10.append(" ,'" + S10EMP2 + "'");
+      tbl10.append(" ,'" + S10S2 + "'");
+      tbl10.append(" ,'" + S10T2 + "'");
+      tbl10.append(" ," + S10AMT2);
+      tbl10.append(" ," + S10TOTAL);
+      tbl10.append(" ,1001");
+      tbl10.append(" ,NOW()");
+      tbl10.append(")");
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl10.toString());
+        if (S10SELECT.equalsIgnoreCase("no")) {
+          ps.executeUpdate();
+          System.out.println("LTA-2 Done");
+        }
+      }
+      catch (Exception w) {
+        w.printStackTrace();
+      }
+      
+
+
+
+      String _80D_0_ = "NO_DATA";
+      String _80D_3_ = "0.00";
+      Double $80D_Self = Double.valueOf(0.0D);
+      Double $80D_Depended = Double.valueOf(0.0D);
+      String $80D_1_ = "No_DATA";
+      boolean selfflag = false;
+      boolean dependentFlag = false;
+      if (ParamValues1 != null) {
+        for (int i = 0; i < ParamValues1.length; i++) {
+          $80D_1_ = request.getParameter("80D_1_" + ParamValues1[i]);
+          _80D_0_ = request.getParameter("80D_0_" + ParamValues1[i]);
+          _80D_3_ = request.getParameter("80D_3_" + ParamValues1[i]);
+          if (_80D_3_ == null) {
+            _80D_3_ = "0.00";
+          }
+          if ((_80D_0_.equalsIgnoreCase("Self/Spouse/Children")) && (_80D_0_ != null)) {
+            $80D_Self = Double.valueOf($80D_Self.doubleValue() + Double.parseDouble(_80D_3_));
+            if ($80D_1_.equalsIgnoreCase("YES"))
+              selfflag = true;
+          }
+          if ((_80D_0_.equalsIgnoreCase("Mother&Father")) && (_80D_0_ != null)) {
+            $80D_Depended = Double.valueOf($80D_Depended.doubleValue() + Double.parseDouble(_80D_3_));
+            if ($80D_1_.equalsIgnoreCase("YES")) {
+              dependentFlag = true;
+            }
+          }
+        }
+        if (dependentFlag) {
+          $80D_Depended = Double.valueOf(Math.min($80D_Depended.doubleValue(), 30000.0D));
+        } else {
+          $80D_Depended = Double.valueOf(Math.min($80D_Depended.doubleValue(), 25000.0D));
+        }
+        if (selfflag) {
+          $80D_Self = Double.valueOf(Math.min($80D_Self.doubleValue(), 30000.0D));
+        } else {
+          $80D_Self = Double.valueOf(Math.min($80D_Self.doubleValue(), 25000.0D));
+        }
+      }
+      System.out.println("80D Final::" + $80D_Depended + "<==>" + $80D_Self);
+      
+
+
+
+      double mysum = MedicalTotal80DD + MedicalTotal80DDB + S80UFINAL + Double.parseDouble(S80E) + S80CCGFINAL + S80TTAFINAL;
+      double $S80C_NPS = Double.parseDouble(CFINAL) - Double.parseDouble(CNPS);
+      System.out.println($S80C_NPS);
+      
+
+
+      StringBuffer tbl11 = new StringBuffer();
+      tbl11.append("INSERT INTO TEST.TBL_EMP_IT_TDS");
+      tbl11.append("(");
+      tbl11.append("RefNo, EMPLOYEEID, FY, HQ, AGE, KIDCOUNT, SEC80C, NPS, S80D, D80D, H80D, S80DDSUM, S80GP, S80GAMT, HOUSEFLAG, RENT, RENTINTEREST, RENTLETOUT, MTP, RENT80EE, OTHERINCOME, LTA, STATUS, LUPDATE");
+      tbl11.append(")");
+      tbl11.append("values");
+      tbl11.append("(");
+      tbl11.append(Key);
+      tbl11.append(" ," + id + " ,");
+      
+
+      tbl11.append(" (SELECT CASE WHEN MONTH(CURDATE())<=3 THEN CONCAT(YEAR(CURDATE())-1, '-',YEAR(CURDATE()))");
+      tbl11.append(" ELSE CONCAT(YEAR(CURDATE()),'-', YEAR(CURDATE())+1) END) ");
+      
+
+      tbl11.append(" ,'" + hq + "'");
+      tbl11.append(" ," + age);
+      tbl11.append(" ," + Kidcount);
+      tbl11.append("\t," + $S80C_NPS);
+      tbl11.append(" ," + CNPS);
+      tbl11.append(" ," + $80D_Depended);
+      tbl11.append(" ," + $80D_Self);
+      tbl11.append(" ," + PHCFINAL);
+      tbl11.append(" ," + mysum);
+      tbl11.append(" ," + part1);
+      tbl11.append(" ," + S80TTAAMT);
+      tbl11.append(" ,UPPER('" + RentHouse + "')");
+      tbl11.append(" ," + RHRENT);
+      tbl11.append(" ," + OHHLIAMT);
+      tbl11.append(" ," + OHHLLETOUT);
+      tbl11.append(" ," + MTP);
+      tbl11.append(" ," + OHHL80EE);
+      tbl11.append(" ," + OI);
+      tbl11.append(" ," + S10TOTAL);
+      tbl11.append(" ,1001");
+      tbl11.append(" ,NOW()");
+      tbl11.append(")");
+      try {
+        PreparedStatement ps = con.prepareStatement(tbl11.toString());
+        System.out.println(ps.toString());
+        ps.executeUpdate();
+        System.out.println("Final Table Executed...!");
+      }
+      catch (Exception z) {
+        z.printStackTrace();
+      }
+      out.print("<p align='center'><a href='Tax1819.html'> Record Submit Successfully </a></p>");
+    }
+    catch (Exception e) {
+      out.print("<p align='center'><a href='Tax1819.html'> Record Submition Failed Please Contact Admin/HR  </a></p>");
+      
+
+
+      try
+      {
+        con.close();
+      } catch (SQLException e1) {
+        e1.printStackTrace();
+      }
+    }
+    finally
+    {
+      try
+      {
+        con.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+}
