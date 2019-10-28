@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/calibri.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/com.lowagie.text-2.1.7.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/commons-digester.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/groovy-all-1.8.0.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jasper.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jasper-el.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jasperreports-6.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jasperreports-extensions-3.5.3.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jasperreports-fonts.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jquery-1.9.1.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/jsp-api.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/log4j.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/mysql-5.1.10.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/mysql-connector-java-3.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/poi-ooxml-3.5-beta5.jar"/>
+	<classpathentry kind="lib" path="D:/Oxegen_dev/JARS/servlet-api.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
